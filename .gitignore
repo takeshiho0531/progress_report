@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# additional
+progress_report_csv/
+progress_report_graph/
