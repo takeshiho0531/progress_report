@@ -64,14 +64,14 @@ def write_in_csv(progress: int, csv_path: str) -> pd.DataFrame:
 
 
 def draw_graph(dataframe_update: pd.DataFrame, graph_path_dir: str) -> None:
-    """特定のディレクトリに、進捗状況の折れ線グラフが"年-月-日.png"の形で保存する関数
+    """特定のディレクトリに、進捗状況の折れ線グラフが"年-月-日.png"の形で保存して保存先のパスを返す関数
 
     Args:
         dataframe_update (pd.DataFrame): 更新後のcsvファイルのDataFrame版
         graph_path_dir (str): 進捗状況の可視化グラフが格納されるディレクトリへのパス
 
     Returns:
-        None:
+        str: グラフの保存先へパス
     """
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
@@ -80,4 +80,6 @@ def draw_graph(dataframe_update: pd.DataFrame, graph_path_dir: str) -> None:
 
     graph_path_dir = Path(graph_path_dir)
     time_str = str(get_jst)[:10]
-    plt.savefig(graph_path_dir / "{}.png".format(time_str))
+    result_graph_path = str(graph_path_dir / "{}.png".format(time_str))
+    plt.savefig(result_graph_path)
+    return result_graph_path
