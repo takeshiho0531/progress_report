@@ -37,10 +37,10 @@ def find_proper_csv(book_name: str, csv_dir: str) -> str:
     books_name_list = [csv[:-4] for csv in csvs_list]
 
     if book_name in books_name_list:
-        csv_path = str(Path(csv_dir) / "{}.png".format(book_name))
+        csv_path = str(Path(csv_dir) / "{}.csv".format(book_name))
     else:
         empty_df = pd.DataFrame(columns=["日時", "どこまで進んだか"])
-        csv_path = str(Path(csv_dir) / "{}.png".format(book_name))
+        csv_path = str(Path(csv_dir) / "{}.csv".format(book_name))
         empty_df.to_csv(csv_path, index=False)
     return csv_path
 
@@ -58,7 +58,7 @@ def write_in_csv(progress: int, csv_path: str) -> pd.DataFrame:
     dataframe = pd.read_csv(csv_path)
     time = get_jst()
     new_row = pd.DataFrame([{"日時": time, "どこまで進んだか": progress}])
-    dataframe_update = pd.concat([dataframe, new_row], ignore_index=True)
+    dataframe_update = pd.concat([dataframe, new_row], ignore_index=True, join="inner")
     dataframe_update.to_csv(csv_path)
     return dataframe_update
 
@@ -75,7 +75,7 @@ def draw_graph(dataframe_update: pd.DataFrame, graph_path_dir: str) -> None:
     """
     fig = plt.figure()
     ax = fig.add_subplot(1, 1, 1)
-    ax.plot(str(dataframe_update["日時"])[5:10], dataframe_update["どこまで進んだか"])
+    ax.plot(dataframe_update["日時"].apply(lambda x: str(x)).str[5:10], dataframe_update["どこまで進んだか"])
     ax.xaxis.set_major_locator(mdates.AutoDateLocator(minticks=1, maxticks=10))
 
     graph_path_dir = Path(graph_path_dir)
