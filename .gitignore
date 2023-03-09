@@ -131,3 +131,4 @@ dmypy.json
 # additional
 progress_report_csv/
 progress_report_graph/
+.DS_Store

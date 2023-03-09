@@ -41,8 +41,8 @@ async def progress_report_api(
     Returns:
         FileResponse: 進捗結果のグラフ
     """
-    csv_dir = "/progress_report_csv"
-    graph_dir = "/progress_report_graph"
+    csv_dir = "progress_report_csv"
+    graph_dir = "progress_report_graph"
     result_graph_path = process_data(book_name, progress, csv_dir, graph_dir)
 
     return FileResponse(path=result_graph_path, filename=result_graph_path)
